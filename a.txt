@@ -1,3 +1,0 @@
-Threads-Has-To-Be-Power-Of-2: 16
-Works-for-each-thread: 1000
-Mean-Time-Of-inter-request-delay-exponentially-distributed: 20
