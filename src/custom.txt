@@ -1,0 +1,2 @@
+Threads-Has-To-Be-Power-Of-2 8
+deposit-Has-To-Be-Mult-Of-Threads 2048
