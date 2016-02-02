@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 public class PetersonTree 
 {
-	int threads;																								//number of threads
-	PetersonLock [] petersonTree;
-	Thread [] threadsArray;																						//array storing threads		
-	int lockInstancePerThread;																					//number of lock each threads acquire	
-	private static ThreadLocal<ArrayList<Integer>> myThreadLocal =new ThreadLocal<ArrayList<Integer>>()			//each thread's lockpath
+	private int threads;																								//number of threads
+	private PetersonLock [] petersonTree;																				//lock tree
+	private Thread [] threadsArray;																						//array storing threads		
+	private int lockInstancePerThread;																					//number of lock each threads acquire	
+	
+	private static ThreadLocal<ArrayList<Integer>> myThreadLocal =new ThreadLocal<ArrayList<Integer>>()					//each thread's lock acquiring pathway
 	{
 		@Override 
 		public ArrayList<Integer> initialValue() 
@@ -14,9 +15,10 @@ public class PetersonTree
 		}
 	};
 	
+	/*initialize the lock tree*/
 	PetersonTree( int amountOfThreads)
 	{		
-		this.threads =  amountOfThreads;																		//8
+		this.threads =  amountOfThreads;																		//ie. 8
 		this.petersonTree = new PetersonLock[threads];															//petersonTree, length 8 for locks(index 0 is not used)
 		int pLength = petersonTree.length;
 		this.lockInstancePerThread = (int) Math.ceil(((Math.log(threads))/Math.log(2)));						//3-each thread acquire 3 locks
@@ -26,6 +28,7 @@ public class PetersonTree
 		}	
 	}
 	
+	/*Thread's lock acquiring method*/
 	public void PTreeLock()
 	{
 		ArrayList<Integer> lockPath = myThreadLocal.get();														//get the thread local lock path
@@ -33,8 +36,7 @@ public class PetersonTree
 		int acquireLock = i/2;																					//the target lock i am acquiring
 		
 		while(acquireLock >= 1 )																				//keep acquire lock until acquire lock is 1(the root)	
-		{	
-			
+		{			
 			petersonTree[acquireLock].lock(i);																	//acquire
 			lockPath.add(acquireLock);																			//add the lock to lock path 				
 			i = acquireLock % 2;																				//new i determine the next lock acquirong 

@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Random;
 import java.util.Scanner;
-
+/*read a configuration .txt file to set up the testing  environment*/
 public class Project_1 
 {
 	 private static int THREADS;	
@@ -13,22 +13,23 @@ public class Project_1
 	 private PetersonTree instance;	 
 	 private static Account MyAccount = new Account();
 	 private static String inputFileName;	
-	 int sum = 0;
-	 
+	 private int sum = 0;	 
 	 
 	 public static void main(String[] args) 
 	 {
 		 Project_1 assignment = new  Project_1();
 		 
 		 try 
-	      {
-			  assignment.concurrent();
-	      }
-	      catch (Exception e) {} 
-		  finally
-		  {
-			  MyAccount.setBalance(0);				  
-		  }		 
+	     {
+			assignment.concurrent();
+	     }
+	      
+		 catch (Exception e) {} 
+		  
+		 finally
+		 {
+			MyAccount.setBalance(0);				  
+		 }		 
 	  }
 	 
 	 public void parse( String file)
